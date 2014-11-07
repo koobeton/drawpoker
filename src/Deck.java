@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class Deck extends ArrayList<Card>{
+class Deck extends ArrayList<Card> {
 
     Deck() {
         for (Suit suit : Suit.values()) {
