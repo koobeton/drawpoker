@@ -53,7 +53,7 @@ public class Deal {
         String input;
         List<Card> hold = new ArrayList<>();
 
-        System.out.print("Hold: ");
+        System.out.print("Hold [1-5]: ");
         try {
             input = reader.readLine().replaceAll("[^1-5]", "");
             for (char c : input.toCharArray()) {
