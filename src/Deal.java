@@ -24,8 +24,8 @@ public class Deal {
 
         //TODO check combinations
 
-        deck.sort(null);
-        System.out.printf("Remaining cards (%d):%n%s%n", deck.size(), deck);
+        //for debug purpose only
+        //remainingCards();
     }
 
     private static void newDeal() {
@@ -67,5 +67,14 @@ public class Deal {
             e.printStackTrace();
         }
         hand = hold;
+    }
+
+    /**
+     * for debug purpose only
+     * */
+    private static void remainingCards() {
+
+        deck.sort(null);
+        System.out.printf("Remaining cards (%d):%n%s%n", deck.size(), deck);
     }
 }
