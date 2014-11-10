@@ -1,4 +1,5 @@
 enum Rank {
+
     DEUCE("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -21,7 +22,8 @@ enum Rank {
         this.weight = weight;
     }
 
-    String getValue() {
+    @Override
+    public String toString() {
         return value;
     }
 

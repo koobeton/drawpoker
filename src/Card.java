@@ -10,7 +10,7 @@ class Card implements Comparable {
 
     @Override
     public String toString() {
-        return rank.getValue() + suit.getValue();
+        return rank.toString() + suit.toString();
     }
 
     @Override

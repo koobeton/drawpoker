@@ -1,4 +1,5 @@
 enum Suit {
+
     //ASCII codes
     HEARTS(3),
     DIAMONDS(4),
@@ -11,7 +12,8 @@ enum Suit {
         this.value = Character.toString((char)value);
     }
 
-    String getValue() {
+    @Override
+    public String toString() {
         return value;
     }
 }

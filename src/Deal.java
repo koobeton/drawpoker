@@ -22,7 +22,11 @@ public class Deal {
         dealHand(CARDS_IN_HAND - hand.size());
         System.out.println(hand);
 
-        //TODO check combinations
+        try {
+            Combination.check(hand);
+        } catch (CombinationException e) {
+            System.out.println(e.getMessage());
+        }
 
         //for debug purpose only
         //remainingCards();
