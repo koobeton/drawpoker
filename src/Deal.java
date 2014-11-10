@@ -15,10 +15,13 @@ public class Deal {
 
         newDeal();
 
+        //for debug purpose only
+        //testDealHand();
         dealHand(CARDS_IN_HAND);
         System.out.println(hand);
 
         holdHand();
+
         dealHand(CARDS_IN_HAND - hand.size());
         System.out.println(hand);
 
@@ -52,14 +55,11 @@ public class Deal {
 
     private static void holdHand() {
 
-        BufferedReader reader =
-                new BufferedReader(new InputStreamReader(System.in));
-        String input;
         List<Card> hold = new ArrayList<>();
 
         System.out.print("Hold [1-5]: ");
-        try {
-            input = reader.readLine().replaceAll("[^1-5]", "");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            String input = reader.readLine().replaceAll("[^1-5]", "");
             for (char c : input.toCharArray()) {
                 int i = Integer.parseInt(Character.toString(c));
                 if (!hold.contains(hand.get(i - 1))) {
@@ -80,5 +80,18 @@ public class Deal {
 
         deck.sort(null);
         System.out.printf("Remaining cards (%d):%n%s%n", deck.size(), deck);
+    }
+
+    /**
+     * for debug purpose only
+     * */
+    private static void testDealHand() {
+
+        hand.add(new Card(Rank.FIVE, Suit.CLUBS));
+        hand.add(new Card(Rank.FIVE, Suit.DIAMONDS));
+        hand.add(new Card(Rank.FIVE, Suit.HEARTS));
+        hand.add(new Card(Rank.ACE, Suit.HEARTS));
+        hand.add(new Card(Rank.FIVE, Suit.SPADES));
+        hand.sort(null);
     }
 }

@@ -16,8 +16,10 @@ class Card implements Comparable {
     @Override
     public int compareTo(Object o) {
         Card other = (Card)o;
-        return rank.getWeight() < other.rank.getWeight() ?
-                -1 : rank.getWeight() > other.rank.getWeight() ?
-                    1 : 0;
+        return rank.compareTo(other.rank);
+    }
+
+    Rank getRank() {
+        return rank;
     }
 }
