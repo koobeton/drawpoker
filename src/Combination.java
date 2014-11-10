@@ -39,6 +39,7 @@ enum Combination {
 
     private static void checkRoyalFlush(List<Card> cards) throws CombinationException {
 
+        //TODO check from cards(0) == TEN
     }
 
     private static void checkStraightFlush(List<Card> cards) throws CombinationException {
@@ -65,7 +66,20 @@ enum Combination {
     }
 
     private static void checkStraight(List<Card> cards) throws CombinationException {
-        //TODO remember that ACE may start straight
+
+        List<Card> temp = new ArrayList<>(cards);
+        int offset = temp.get(0).getRank().compareTo(Rank.DEUCE) == 0 &&
+                temp.get(temp.size() - 1).getRank().compareTo(Rank.ACE) == 0 ?
+                2 : 1;
+        for (int i = 0; i < temp.size() - offset; i++) {
+            if (temp.get(i + 1).getRank().getWeight() - temp.get(i).getRank().getWeight() != 1) {
+                return;
+            }
+        }
+        if (offset == 2) {
+            temp.add(0, temp.remove(temp.size() - 1));
+        }
+        throw new CombinationException(STRAIGHT, temp);
     }
 
     private static void checkThreeOfAKind(List<Card> cards) throws CombinationException {

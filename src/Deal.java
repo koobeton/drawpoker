@@ -87,11 +87,11 @@ public class Deal {
      * */
     private static void testDealHand() {
 
-        hand.add(new Card(Rank.FIVE, Suit.CLUBS));
+        hand.add(new Card(Rank.DEUCE, Suit.CLUBS));
         hand.add(new Card(Rank.FIVE, Suit.DIAMONDS));
-        hand.add(new Card(Rank.FIVE, Suit.HEARTS));
         hand.add(new Card(Rank.ACE, Suit.HEARTS));
-        hand.add(new Card(Rank.FIVE, Suit.SPADES));
+        hand.add(new Card(Rank.FOUR, Suit.HEARTS));
+        hand.add(new Card(Rank.THREE, Suit.SPADES));
         hand.sort(null);
     }
 }
