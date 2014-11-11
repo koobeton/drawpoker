@@ -22,4 +22,8 @@ class Card implements Comparable {
     Rank getRank() {
         return rank;
     }
+
+    Suit getSuit() {
+        return suit;
+    }
 }

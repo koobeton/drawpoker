@@ -26,6 +26,7 @@ enum Combination {
 
     static void check(List<Card> hand) throws CombinationException {
 
+        //hand must be sorted in ascending order
         checkRoyalFlush(hand);
         checkStraightFlush(hand);
         checkFourOfAKind(hand);
@@ -39,11 +40,26 @@ enum Combination {
 
     private static void checkRoyalFlush(List<Card> cards) throws CombinationException {
 
-        //TODO check from cards(0) == TEN
+        if (cards.get(0).getRank().compareTo(Rank.TEN) == 0) {
+            try {
+                checkStraightFlush(cards);
+            } catch (CombinationException e) {
+                throw new CombinationException(ROYAL_FLUSH, cards);
+            }
+        }
     }
 
     private static void checkStraightFlush(List<Card> cards) throws CombinationException {
 
+        try {
+            checkFlush(cards);
+        } catch (CombinationException e) {
+            try {
+                checkStraight(cards);
+            } catch (CombinationException e1) {
+                throw new CombinationException(STRAIGHT_FLUSH, cards);
+            }
+        }
     }
 
     private static void checkFourOfAKind(List<Card> cards) throws CombinationException {
@@ -59,10 +75,25 @@ enum Combination {
 
     private static void checkFullHouse(List<Card> cards) throws CombinationException {
 
+        List<Card> temp = new ArrayList<>(cards);
+        try {
+            checkThreeOfAKind(temp);
+        } catch (CombinationException e) {
+            temp.removeAll(e.getCards());
+            try {
+                checkPair(temp);
+            } catch (CombinationException e1) {
+                throw new CombinationException(FULL_HOUSE, cards);
+            }
+        }
     }
 
     private static void checkFlush(List<Card> cards) throws CombinationException {
 
+        for (int i = 0; i < cards.size() - 1; i++) {
+            if (cards.get(i).getSuit().compareTo(cards.get(i + 1).getSuit()) != 0) return;
+        }
+        throw new CombinationException(FLUSH, cards);
     }
 
     private static void checkStraight(List<Card> cards) throws CombinationException {

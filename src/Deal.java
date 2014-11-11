@@ -17,6 +17,7 @@ public class Deal {
 
         //for debug purpose only
         //testDealHand();
+
         dealHand(CARDS_IN_HAND);
         System.out.println(hand);
 
@@ -87,11 +88,11 @@ public class Deal {
      * */
     private static void testDealHand() {
 
-        hand.add(new Card(Rank.DEUCE, Suit.CLUBS));
-        hand.add(new Card(Rank.FIVE, Suit.DIAMONDS));
-        hand.add(new Card(Rank.ACE, Suit.HEARTS));
-        hand.add(new Card(Rank.FOUR, Suit.HEARTS));
-        hand.add(new Card(Rank.THREE, Suit.SPADES));
+        hand.add(new Card(Rank.KING, Suit.CLUBS));
+        hand.add(new Card(Rank.TEN, Suit.CLUBS));
+        hand.add(new Card(Rank.ACE, Suit.CLUBS));
+        hand.add(new Card(Rank.QUEEN, Suit.CLUBS));
+        hand.add(new Card(Rank.JACK, Suit.CLUBS));
         hand.sort(null);
     }
 }
