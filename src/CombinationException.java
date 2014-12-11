@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class CombinationException extends Exception {
+class CombinationException extends Exception {
 
     private Combination combination;
     private List<Card> cards;
