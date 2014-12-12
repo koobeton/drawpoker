@@ -8,10 +8,18 @@ import java.util.List;
 public class Deal {
 
     private static final int CARDS_IN_HAND = 5;
+    private static final String ARG_STAT = "-stat";
     private static List<Card> deck;
     private static List<Card> hand;
 
     public static void main(String... args) {
+
+        for (String arg : args) {
+            if (arg.equals(ARG_STAT)) {
+                Statistics.show();
+                System.exit(0);
+            }
+        }
 
         newDeal();
 
