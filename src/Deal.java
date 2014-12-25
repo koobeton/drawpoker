@@ -14,11 +14,15 @@ public class Deal {
 
     public static void main(String... args) {
 
-        for (String arg : args) {
-            if (arg.equals(ARG_STAT)) {
-                Statistics.show();
-                System.exit(0);
+        if (args.length != 0) {
+            for (String arg : args) {
+                if (arg.equals(ARG_STAT)) {
+                    Statistics.show();
+                    System.exit(0);
+                }
             }
+            System.out.printf("Available keys:%n\t\t%s%n", ARG_STAT);
+            System.exit(0);
         }
 
         newDeal();
