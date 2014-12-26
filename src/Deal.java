@@ -21,7 +21,7 @@ public class Deal {
                     System.exit(0);
                 }
             }
-            System.out.printf("Available keys:%n\t\t%s%n", ARG_STAT);
+            System.out.printf("Available options:%n\t\t%s\tShow statistics%n", ARG_STAT);
             System.exit(0);
         }
 
