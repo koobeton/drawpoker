@@ -78,7 +78,7 @@ public class Deal {
                 if (!hold.contains(hand.get(i - 1))) {
                     hold.add(hand.get(i - 1));
                 }
-                if (hold.size() == 5) break;
+                if (hold.size() == CARDS_IN_HAND) break;
             }
         } catch (IOException e) {
             e.printStackTrace();
