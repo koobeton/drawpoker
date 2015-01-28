@@ -14,26 +14,7 @@ public class Deal {
 
     public static void main(String... args) {
 
-        if (args.length != 0) {
-            for (String arg : args) {
-                try {
-                    switch (Option.get(arg)) {
-                        case SORT:
-                            sort = true;
-                            break;
-                        case STAT:
-                            Statistics.show();
-                            System.exit(0);
-                    }
-                } catch (NullPointerException e) {
-                    System.out.println("Available options:");
-                    for (Option option : Option.values()) {
-                        System.out.println(option);
-                    }
-                    System.exit(0);
-                }
-            }
-        }
+        if (args.length != 0) handleArgs(args);
 
         newDeal();
 
@@ -94,6 +75,28 @@ public class Deal {
             e.printStackTrace();
         }
         hand = hold;
+    }
+
+    private static void handleArgs(String... args) {
+
+        for (String arg : args) {
+            try {
+                switch (Option.get(arg)) {
+                    case SORT:
+                        sort = true;
+                        break;
+                    case STAT:
+                        Statistics.show();
+                        System.exit(0);
+                }
+            } catch (NullPointerException e) {
+                System.out.println("Available options:");
+                for (Option option : Option.values()) {
+                    System.out.println(option);
+                }
+                System.exit(0);
+            }
+        }
     }
 
     /**
