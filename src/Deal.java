@@ -11,6 +11,7 @@ public class Deal {
     private static boolean sort = false;
     private static List<Card> deck;
     private static List<Card> hand;
+    private static Combination combination;
 
     public static void main(String... args) {
 
@@ -32,7 +33,10 @@ public class Deal {
         try {
             Combination.check(hand);
         } catch (CombinationException e) {
+            combination = e.getCombination();
             System.out.println(e.getMessage());
+        } finally {
+            Statistics.update(combination);
         }
 
         //for debug purpose only

@@ -15,6 +15,10 @@ class CombinationException extends Exception {
         return combination + ":\n" + cards;
     }
 
+    Combination getCombination() {
+        return combination;
+    }
+
     List<Card> getCards() {
         return cards;
     }
