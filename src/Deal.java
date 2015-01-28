@@ -8,7 +8,7 @@ import java.util.List;
 public class Deal {
 
     private static final int CARDS_IN_HAND = 5;
-    private static final String ARG_STAT = "-stat";
+    private static boolean sort = false;
     private static List<Card> deck;
     private static List<Card> hand;
 
@@ -16,13 +16,23 @@ public class Deal {
 
         if (args.length != 0) {
             for (String arg : args) {
-                if (arg.equals(ARG_STAT)) {
-                    Statistics.show();
+                try {
+                    switch (Option.get(arg)) {
+                        case SORT:
+                            sort = true;
+                            break;
+                        case STAT:
+                            Statistics.show();
+                            System.exit(0);
+                    }
+                } catch (NullPointerException e) {
+                    System.out.println("Available options:");
+                    for (Option option : Option.values()) {
+                        System.out.println(option);
+                    }
                     System.exit(0);
                 }
             }
-            System.out.printf("Available options:%n\t\t%s\tShow statistics%n", ARG_STAT);
-            System.exit(0);
         }
 
         newDeal();
@@ -63,7 +73,7 @@ public class Deal {
     private static void dealHand(int cardToDeal) {
 
         hand.addAll(Deck.deal(deck, cardToDeal));
-        hand.sort(null);
+        if (sort) hand.sort(null);
     }
 
     private static void holdHand() {

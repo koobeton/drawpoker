@@ -27,6 +27,7 @@ enum Combination {
     static void check(List<Card> hand) throws CombinationException {
 
         //hand must be sorted in ascending order
+        hand.sort(null);
         checkRoyalFlush(hand);
         checkStraightFlush(hand);
         checkFourOfAKind(hand);
