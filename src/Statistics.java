@@ -9,9 +9,15 @@ class Statistics {
     private static int total;
 
     static {
-        //initializing map
+        //initialize map
         for (Combination combination : Combination.values()) {
             map.put(combination, 0);
+        }
+        //initialize file
+        try {
+            if (file.createNewFile()) writeFile();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -19,14 +25,13 @@ class Statistics {
 
         try {
             readFile();
-        } catch (FileNotFoundException e) {
-            System.out.printf("File not found: %s%n", e.getMessage());
-            System.exit(1);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        System.out.printf("Total\t\t%7d%n", total);
+        separator();
+        System.out.printf("Total hands\t\t%7d%n", total);
+        separator();
         for (Combination key : map.keySet()) {
             String tab = key.equals(Combination.FLUSH) ? "\t\t" : "\t";
             int value = map.get(key);
@@ -35,30 +40,27 @@ class Statistics {
         }
     }
 
+    private static void separator() {
+
+        for (int i = 0; i < 31; i++) {
+            System.out.print("-");
+        }
+        System.out.println();
+    }
+
     static void update(Combination combination) {
 
         try {
-            initFile();
             readFile();
-
             total++;
             if (combination != null) {
                 for (Combination key : map.keySet()) {
                     if (key.equals(combination)) map.put(key, map.get(key) + 1);
                 }
             }
-
             writeFile();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private static void initFile() throws IOException {
-
-        if (!file.exists()) {
-            file.createNewFile();
-            writeFile();
         }
     }
 
@@ -66,20 +68,27 @@ class Statistics {
 
         try (BufferedReader input = new BufferedReader(new FileReader(file))) {
 
-            total = input.read();
+            total = readInt(input);
             for (Combination key : map.keySet()) {
-                map.put(key, input.read());
+                map.put(key, readInt(input));
             }
         }
+    }
+
+    private static int readInt(BufferedReader buffer) throws IOException {
+
+        String str = buffer.readLine().replaceAll("[^0-9]", "");
+        str = str.equals("") ? "0" : str;
+        return Integer.parseInt(str);
     }
 
     private static void writeFile() throws IOException {
 
         try (BufferedWriter output = new BufferedWriter(new FileWriter(file))) {
 
-            output.write(total);
+            output.write(total + System.lineSeparator());
             for (Integer value : map.values()) {
-                output.write(value);
+                output.write(value + System.lineSeparator());
             }
         }
     }
