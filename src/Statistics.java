@@ -21,6 +21,7 @@ class Statistics {
         }
     }
 
+    //show statistics and exit
     static void show() {
 
         try {
@@ -38,6 +39,8 @@ class Statistics {
             double percent = (double)value / total * 100;
             System.out.printf("%s%s%7d%7.2f%%%n", key, tab, value, percent);
         }
+
+        System.exit(0);
     }
 
     private static void separator() {

@@ -8,7 +8,10 @@ import java.util.List;
 public class Deal {
 
     private static final int CARDS_IN_HAND = 5;
+    private static final String EXIT = "exit";
     private static boolean sort = false;
+    private static boolean endGame = false;
+    private static BufferedReader standardInputStream;
     private static List<Card> deck;
     private static List<Card> hand;
     private static Combination combination;
@@ -17,30 +20,39 @@ public class Deal {
 
         if (args.length != 0) handleArgs(args);
 
-        newDeal();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
 
-        //for debug purpose only
-        //testDealHand();
+            standardInputStream = reader;
 
-        dealHand(CARDS_IN_HAND);
-        System.out.println(hand);
+            while (!endGame) {
 
-        holdHand();
+                newDeal();
 
-        dealHand(CARDS_IN_HAND - hand.size());
-        System.out.println(hand);
+                dealHand(CARDS_IN_HAND);
+                System.out.println(hand);
 
-        try {
-            Combination.check(hand);
-        } catch (CombinationException e) {
-            combination = e.getCombination();
-            System.out.println(e.getMessage());
-        } finally {
-            Statistics.update(combination);
+                holdHand();
+
+                dealHand(CARDS_IN_HAND - hand.size());
+                System.out.println(hand);
+
+                try {
+                    Combination.check(hand);
+                } catch (CombinationException e) {
+                    combination = e.getCombination();
+                    System.out.println(e.getMessage());
+                } finally {
+                    Statistics.update(combination);
+                }
+
+                checkEndGame();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        //for debug purpose only
-        //remainingCards();
+        //show statistics and exit
+        Statistics.show();
     }
 
     private static void newDeal() {
@@ -61,24 +73,27 @@ public class Deal {
         if (sort) hand.sort(null);
     }
 
-    private static void holdHand() {
+    private static void holdHand() throws IOException {
 
         List<Card> hold = new ArrayList<>();
 
         System.out.print("Hold [1-5]: ");
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            String input = reader.readLine().replaceAll("[^1-5]", "");
-            for (char c : input.toCharArray()) {
-                int i = Integer.parseInt(Character.toString(c));
-                if (!hold.contains(hand.get(i - 1))) {
-                    hold.add(hand.get(i - 1));
-                }
-                if (hold.size() == CARDS_IN_HAND) break;
+        for (char c : standardInputStream.readLine().replaceAll("[^1-5]", "").toCharArray()) {
+            int i = Integer.parseInt(Character.toString(c));
+            if (!hold.contains(hand.get(i - 1))) {
+                hold.add(hand.get(i - 1));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (hold.size() == CARDS_IN_HAND) break;
         }
+
         hand = hold;
+    }
+
+    private static void checkEndGame() throws IOException {
+
+        System.out.printf("%nPress [Enter] to continue or type [%s] to exit: ", EXIT);
+        if (standardInputStream.readLine().equals(EXIT)) endGame = true;
+        System.out.println();
     }
 
     private static void handleArgs(String... args) {
@@ -91,7 +106,6 @@ public class Deal {
                         break;
                     case STAT:
                         Statistics.show();
-                        System.exit(0);
                 }
             } catch (NullPointerException e) {
                 System.out.println("Available options:");
