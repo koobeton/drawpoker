@@ -3,25 +3,31 @@ import java.util.List;
 
 enum Combination {
 
-    ROYAL_FLUSH("Royal Flush"),
-    STRAIGHT_FLUSH("Straight Flush"),
-    FOUR_OF_A_KIND("Four of a Kind"),
-    FULL_HOUSE("Full House"),
-    FLUSH("Flush"),
-    STRAIGHT("Straight"),
-    THREE_OF_A_KIND("Three of a Kind"),
-    TWO_PAIRS("Two Pairs"),
-    JACKS_OR_BETTER("Jacks or Better");
+    ROYAL_FLUSH("Royal Flush", 500),
+    STRAIGHT_FLUSH("Straight Flush", 50),
+    FOUR_OF_A_KIND("Four of a Kind", 25),
+    FULL_HOUSE("Full House", 8),
+    FLUSH("Flush", 5),
+    STRAIGHT("Straight", 4),
+    THREE_OF_A_KIND("Three of a Kind", 3),
+    TWO_PAIRS("Two Pairs", 2),
+    JACKS_OR_BETTER("Jacks or Better", 1);
 
     private final String value;
+    private final int payout;
 
-    private Combination(String value) {
+    private Combination(String value, int payout) {
         this.value = value;
+        this.payout = payout;
     }
 
     @Override
     public String toString() {
         return value;
+    }
+
+    int getPayout() {
+        return payout;
     }
 
     static void check(List<Card> hand) throws CombinationException {

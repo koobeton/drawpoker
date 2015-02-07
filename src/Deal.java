@@ -9,12 +9,13 @@ public class Deal {
 
     private static final int CARDS_IN_HAND = 5;
     private static final String EXIT = "exit";
+
     private static boolean sort = false;
     private static boolean endGame = false;
     private static BufferedReader standardInputStream;
     private static List<Card> deck;
     private static List<Card> hand;
-    private static Combination combination;
+    private static Billing billing;
 
     public static void main(String... args) {
 
@@ -24,9 +25,15 @@ public class Deal {
 
             standardInputStream = reader;
 
+            billing = new Billing();
+
             while (!endGame) {
 
+                Combination combination = null;
+
                 newDeal();
+
+                billing.makeBet();
 
                 dealHand(CARDS_IN_HAND);
                 System.out.println(hand);
@@ -43,6 +50,7 @@ public class Deal {
                     System.out.println(e.getMessage());
                 } finally {
                     Statistics.update(combination);
+                    billing.update(combination);
                 }
 
                 checkEndGame();
@@ -91,9 +99,14 @@ public class Deal {
 
     private static void checkEndGame() throws IOException {
 
-        System.out.printf("%nPress [Enter] to continue or type [%s] to exit: ", EXIT);
-        if (standardInputStream.readLine().equals(EXIT)) endGame = true;
-        System.out.println();
+        if (billing.getCredit() <= 0) {
+            endGame = true;
+            System.out.printf("%nGame over!%n%n");
+        } else {
+            System.out.printf("%nPress [Enter] to continue or type [%s] to exit: ", EXIT);
+            if (standardInputStream.readLine().equals(EXIT)) endGame = true;
+            System.out.printf("%n");
+        }
     }
 
     private static void handleArgs(String... args) {
