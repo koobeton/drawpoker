@@ -30,22 +30,49 @@ class Statistics {
             e.printStackTrace();
         }
 
-        separator();
+        int separatorLength = 31;
+        separator(separatorLength);
         System.out.printf("Total hands\t\t%7d%n", total);
-        separator();
+        separator(separatorLength);
+
         for (Combination key : map.keySet()) {
-            String tab = key.equals(Combination.FLUSH) ? "\t\t" : "\t";
             int value = map.get(key);
             double percent = (double)value / total * 100;
-            System.out.printf("%s%s%7d%7.2f%%%n", key, tab, value, percent);
+            System.out.printf("%s%s%7d%7.2f%%%n",
+                                key,
+                                getTab(key),
+                                value,
+                                percent);
         }
 
         System.exit(0);
     }
 
-    private static void separator() {
+    //show payouts and exit
+    static void showPayouts() {
 
-        for (int i = 0; i < 31; i++) {
+        int separatorLength = 23;
+        separator(separatorLength);
+        System.out.printf("Payouts%n");
+        separator(separatorLength);
+
+        for (Combination combination : Combination.values()) {
+            System.out.printf("%s%s%7d%n",
+                                combination,
+                                getTab(combination),
+                                combination.getPayout());
+        }
+
+        System.exit(0);
+    }
+
+    private static String getTab(Combination combination) {
+        return combination.equals(Combination.FLUSH) ? "\t\t" : "\t";
+    }
+
+    private static void separator(int number) {
+
+        for (int i = 0; i < number; i++) {
             System.out.print("-");
         }
         System.out.println();

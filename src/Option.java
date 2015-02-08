@@ -1,5 +1,6 @@
 enum Option {
 
+    PAYOUT("-payout", "Show payouts and exit"),
     SORT("-sort", "Sort hand by rank in ascending order (unsorted by default)"),
     STAT("-stat", "Show statistics and exit");
 

@@ -119,6 +119,9 @@ public class Deal {
                         break;
                     case STAT:
                         Statistics.show();
+                        break;
+                    case PAYOUT:
+                        Statistics.showPayouts();
                 }
             } catch (NullPointerException e) {
                 System.out.println("Available options:");
