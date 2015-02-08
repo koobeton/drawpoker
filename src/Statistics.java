@@ -42,7 +42,7 @@ class Statistics {
                                 key,
                                 getTab(key),
                                 value,
-                                percent);
+                                Double.isNaN(percent) ? 0 : percent);
         }
 
         System.exit(0);
