@@ -8,24 +8,14 @@ class Billing {
 
     Billing() {
 
-        this(DEFAULT_CREDIT);
-    }
-
-    Billing(int credit) {
-
-        this.credit = credit;
+        credit = DEFAULT_CREDIT;
     }
 
     void makeBet() {
 
-        makeBet(DEFAULT_BET);
-    }
-
-    void makeBet(int bet) {
-
         System.out.printf("%nBet: %d\t\t\tCredit: %d%n%n",
-                            this.bet = bet,
-                            credit -= this.bet);
+                bet = DEFAULT_BET,
+                credit -= bet);
     }
 
     void update(Combination combination) {
