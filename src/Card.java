@@ -10,7 +10,17 @@ class Card implements Comparable {
 
     @Override
     public String toString() {
-        return rank.toString() + suit.toString();
+        String color = "";
+        switch (suit) {
+            case HEARTS:
+            case DIAMONDS:
+                color = Paint.RED;
+                break;
+            case CLUBS:
+            case SPADES:
+                color = Paint.BLACK;
+        }
+        return Paint.getAnsiString(color, rank.toString() + suit.toString());
     }
 
     @Override

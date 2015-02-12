@@ -1,3 +1,5 @@
+import org.fusesource.jansi.AnsiConsole;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,6 +21,8 @@ public class Deal {
 
     public static void main(String... args) {
 
+        AnsiConsole.systemInstall();
+
         if (args.length != 0) handleArgs(args);
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
@@ -38,7 +42,9 @@ public class Deal {
                 dealHand(CARDS_IN_HAND);
                 System.out.println(hand);
 
+                AnsiConsole.systemUninstall();
                 holdHand();
+                AnsiConsole.systemInstall();
 
                 dealHand(CARDS_IN_HAND - hand.size());
                 System.out.println(hand);
@@ -53,7 +59,9 @@ public class Deal {
                     billing.update(combination);
                 }
 
+                AnsiConsole.systemUninstall();
                 checkEndGame();
+                AnsiConsole.systemInstall();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -124,13 +132,15 @@ public class Deal {
                         Statistics.showPayouts();
                 }
             } catch (NullPointerException e) {
-                System.out.println("Available options:");
-                for (Option option : Option.values()) {
-                    System.out.println(option);
-                }
-                System.exit(0);
+                Option.showAvailable();
             }
         }
+    }
+
+    static void exit() {
+
+        AnsiConsole.systemUninstall();
+        System.exit(0);
     }
 
     /**

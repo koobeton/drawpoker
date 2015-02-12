@@ -31,9 +31,9 @@ class Statistics {
         }
 
         int separatorLength = 31;
-        separator(separatorLength);
-        System.out.printf("Total hands\t\t%7d%n", total);
-        separator(separatorLength);
+        Paint.separator(separatorLength);
+        System.out.printf("%s\t\t%7d%n", Paint.getAnsiString(Paint.GREEN, "Total hands"), total);
+        Paint.separator(separatorLength);
 
         for (Combination key : map.keySet()) {
             int value = map.get(key);
@@ -45,16 +45,16 @@ class Statistics {
                                 Double.isNaN(percent) ? 0 : percent);
         }
 
-        System.exit(0);
+        Deal.exit();
     }
 
     //show payouts and exit
     static void showPayouts() {
 
         int separatorLength = 23;
-        separator(separatorLength);
-        System.out.printf("Payouts%n");
-        separator(separatorLength);
+        Paint.separator(separatorLength);
+        System.out.println(Paint.getAnsiString(Paint.MAGENTA, "Payouts"));
+        Paint.separator(separatorLength);
 
         for (Combination combination : Combination.values()) {
             System.out.printf("%s%s%7d%n",
@@ -63,19 +63,11 @@ class Statistics {
                                 combination.getPayout());
         }
 
-        System.exit(0);
+        Deal.exit();
     }
 
     private static String getTab(Combination combination) {
         return combination.equals(Combination.FLUSH) ? "\t\t" : "\t";
-    }
-
-    private static void separator(int number) {
-
-        for (int i = 0; i < number; i++) {
-            System.out.print("-");
-        }
-        System.out.println();
     }
 
     static void update(Combination combination) {

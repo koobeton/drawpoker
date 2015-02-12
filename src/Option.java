@@ -14,13 +14,28 @@ enum Option {
 
     @Override
     public String toString() {
-        return String.format("\t%s\t%s", value, description);
+
+        return String.format("\t%s\t%s",
+                Paint.getAnsiString(Paint.WHITE, value),
+                description);
     }
 
     static Option get(String arg) {
+
         for (Option option : Option.values()) {
             if (arg.equals(option.value)) return option;
         }
         return null;
+    }
+
+    //show available options and exit
+    static void showAvailable() {
+
+        System.out.println("Available options:");
+        for (Option option : Option.values()) {
+            System.out.println(option);
+        }
+
+        Deal.exit();
     }
 }
