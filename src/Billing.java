@@ -13,20 +13,24 @@ class Billing {
 
     void makeBet() {
 
-        System.out.printf("%nBet: %d\t\t\tCredit: %d%n%n",
-                bet = DEFAULT_BET,
-                credit -= bet);
+        System.out.printf("%n%s %s\t\t\t%s %s%n%n",
+                Paint.getAnsiString(Paint.WHITE, "Bet:"),
+                Paint.getAnsiString(Paint.YELLOW, bet = DEFAULT_BET),
+                Paint.getAnsiString(Paint.WHITE, "Credit:"),
+                Paint.getAnsiString(Paint.GREEN, credit -= bet));
     }
 
     void update(Combination combination) {
 
         int payout = combination != null ? combination.getPayout() : 0;
         int pays = payout * bet;
-        System.out.printf("%nPays: %d x %d = %d\t\tCredit: %d%n",
-                payout,
-                bet,
-                pays,
-                credit += pays);
+        System.out.printf("%n%s %s x %s = %s\t\t%s %s%n",
+                Paint.getAnsiString(Paint.WHITE, "Pays:"),
+                Paint.getAnsiString(Paint.MAGENTA, payout),
+                Paint.getAnsiString(Paint.YELLOW, bet),
+                Paint.getAnsiString(Paint.GREEN, pays),
+                Paint.getAnsiString(Paint.WHITE, "Credit:"),
+                Paint.getAnsiString(Paint.GREEN, credit += pays));
     }
 
     int getCredit() {

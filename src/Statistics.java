@@ -32,7 +32,9 @@ class Statistics {
 
         int separatorLength = 31;
         Paint.separator(separatorLength);
-        System.out.printf("%s\t\t%7d%n", Paint.getAnsiString(Paint.GREEN, "Total hands"), total);
+        System.out.printf("%s\t\t%s%n",
+                Paint.getAnsiString(Paint.GREEN, "Total hands"),
+                Paint.getAnsiString(Paint.WHITE, String.format("%7d", total)));
         Paint.separator(separatorLength);
 
         for (Combination key : map.keySet()) {

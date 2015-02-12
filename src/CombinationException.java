@@ -12,7 +12,9 @@ class CombinationException extends Exception {
 
     @Override
     public String getMessage() {
-        return combination + ":\n" + cards;
+        return String.format("%s%n%s",
+                Paint.getAnsiString(Paint.MAGENTA, combination + ":"),
+                cards);
     }
 
     Combination getCombination() {

@@ -16,6 +16,11 @@ class Paint {
         return ansi().render(String.format("@|%s %s|@", attributes, text)).toString();
     }
 
+    static String getAnsiString(String attributes, int value) {
+
+        return getAnsiString(attributes, Integer.toString(value));
+    }
+
     static void separator(int number) {
 
         char[] charLine = new char[number];
