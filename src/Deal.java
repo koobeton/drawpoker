@@ -3,6 +3,7 @@ import org.fusesource.jansi.AnsiConsole;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,9 +20,10 @@ public class Deal {
     private static List<Card> hand;
     private static Billing billing;
 
-    public static void main(String... args) {
+    public static void main(String... args) throws SQLException {
 
         AnsiConsole.systemInstall();
+        Statistics.init();
 
         if (args.length != 0) handleArgs(args);
 
@@ -117,7 +119,7 @@ public class Deal {
         }
     }
 
-    private static void handleArgs(String... args) {
+    private static void handleArgs(String... args) throws SQLException {
 
         for (String arg : args) {
             try {
@@ -139,6 +141,7 @@ public class Deal {
 
     static void exit() {
 
+        Statistics.shutdownDB();
         AnsiConsole.systemUninstall();
         System.exit(0);
     }
