@@ -1,7 +1,9 @@
+package cards;
+
 import java.util.ArrayList;
 import java.util.List;
 
-enum Combination {
+public enum Combination {
 
     ROYAL_FLUSH("Royal Flush", 500),
     STRAIGHT_FLUSH("Straight Flush", 50),
@@ -16,7 +18,7 @@ enum Combination {
     private final String value;
     private final int payout;
 
-    private Combination(String value, int payout) {
+    Combination(String value, int payout) {
         this.value = value;
         this.payout = payout;
     }
@@ -26,11 +28,11 @@ enum Combination {
         return value;
     }
 
-    int getPayout() {
+    public int getPayout() {
         return payout;
     }
 
-    static void check(List<Card> hand) throws CombinationException {
+    public static void check(List<Card> hand) throws CombinationException {
 
         //hand must be sorted in ascending order
         hand.sort(null);

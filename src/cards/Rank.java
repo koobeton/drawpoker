@@ -1,4 +1,6 @@
-enum Rank {
+package cards;
+
+public enum Rank {
 
     DEUCE("2", 2),
     THREE("3", 3),
@@ -17,7 +19,7 @@ enum Rank {
     private final String value;
     private final int weight;
 
-    private Rank(String value, int weight) {
+    Rank(String value, int weight) {
         this.value = value;
         this.weight = weight;
     }

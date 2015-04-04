@@ -1,2 +1,2 @@
 Class-Path: lib/jansi-1.4.jar lib/derby.jar
-Main-Class: Deal
+Main-Class: main.Deal

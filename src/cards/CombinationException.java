@@ -1,6 +1,10 @@
+package cards;
+
+import misc.Paint;
+
 import java.util.List;
 
-class CombinationException extends Exception {
+public class CombinationException extends Exception {
 
     private Combination combination;
     private List<Card> cards;
@@ -17,7 +21,7 @@ class CombinationException extends Exception {
                 cards);
     }
 
-    Combination getCombination() {
+    public Combination getCombination() {
         return combination;
     }
 

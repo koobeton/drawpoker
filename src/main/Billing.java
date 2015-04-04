@@ -1,3 +1,8 @@
+package main;
+
+import cards.Combination;
+import misc.Paint;
+
 class Billing {
 
     private static final int DEFAULT_CREDIT = 100;

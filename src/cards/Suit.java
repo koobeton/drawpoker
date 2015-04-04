@@ -1,4 +1,6 @@
-enum Suit {
+package cards;
+
+public enum Suit {
 
     //ASCII codes
     HEARTS(3),
@@ -8,7 +10,7 @@ enum Suit {
 
     private final String value;
 
-    private Suit(int value) {
+    Suit(int value) {
         this.value = Character.toString((char)value);
     }
 

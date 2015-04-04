@@ -1,3 +1,7 @@
+package main;
+
+import misc.Paint;
+
 enum Option {
 
     PAYOUT("-payout", "Show payouts and exit"),
@@ -7,7 +11,7 @@ enum Option {
     private final String value;
     private final String description;
 
-    private Option(String value, String description) {
+    Option(String value, String description) {
         this.value = value;
         this.description = description;
     }

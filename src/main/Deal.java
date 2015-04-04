@@ -1,3 +1,7 @@
+package main;
+
+import cards.*;
+import db.DBManager;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.io.BufferedReader;
@@ -23,7 +27,7 @@ public class Deal {
     public static void main(String... args) throws SQLException {
 
         AnsiConsole.systemInstall();
-        Statistics.init();
+        DBManager.init();
 
         if (args.length != 0) handleArgs(args);
 
@@ -141,7 +145,7 @@ public class Deal {
 
     static void exit() {
 
-        Statistics.shutdownDB();
+        DBManager.shutdownDB();
         AnsiConsole.systemUninstall();
         System.exit(0);
     }
