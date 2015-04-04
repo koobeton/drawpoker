@@ -16,6 +16,7 @@ public class Deal {
 
     private static final int CARDS_IN_HAND = 5;
     private static final String EXIT = "exit";
+    private static final int PLAYER_ID = 1;
 
     private static boolean sort = false;
     private static boolean endGame = false;
@@ -35,7 +36,7 @@ public class Deal {
 
             standardInputStream = reader;
 
-            billing = new Billing();
+            billing = new Billing(PLAYER_ID);
 
             while (!endGame) {
 
@@ -72,6 +73,8 @@ public class Deal {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        DBManager.updatePlayer(PLAYER_ID, billing.getCredit());
 
         //show statistics and exit
         Statistics.show();

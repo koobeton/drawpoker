@@ -13,7 +13,7 @@ class Statistics {
     //show statistics and exit
     static void show() throws SQLException {
 
-        Iterator<Stats> iterator = DBManager.getAllFromStats().iterator();
+        Iterator<Stats> iterator = DBManager.getAllStats().iterator();
         Stats current;
         int separatorLength = 31;
         int total = 0;

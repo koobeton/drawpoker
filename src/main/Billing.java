@@ -1,7 +1,10 @@
 package main;
 
 import cards.Combination;
+import db.DBManager;
 import misc.Paint;
+
+import java.sql.SQLException;
 
 class Billing {
 
@@ -11,9 +14,10 @@ class Billing {
     private int credit;
     private int bet;
 
-    Billing() {
+    Billing(int playerId) throws SQLException {
 
-        credit = DEFAULT_CREDIT;
+        credit = DBManager.getPlayer(playerId).getCredit();
+        credit = credit <= 0 ? DEFAULT_CREDIT : credit;
     }
 
     void makeBet() {

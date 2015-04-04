@@ -34,6 +34,9 @@ public class DBManager {
     private static final String UPDATE_STATS =
             String.format("update stats set value = value + 1 where name in ('%s', ?)", TOTAL_HANDS);
 
+    private static final String SELECT_FROM_PLAYER = "select id, credit from player where id = ?";
+    private static final String UPDATE_PLAYER = "update player set credit = ? where id = ?";
+
     private static Connection conn;
 
     public static void init() throws SQLException {
@@ -69,19 +72,38 @@ public class DBManager {
         return exists;
     }
 
-    public static List<Stats> getAllFromStats() throws SQLException {
+    public static List<Stats> getAllStats() throws SQLException {
         ArrayList<Stats> result = new ArrayList<>();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(SELECT_ALL_FROM_STATS);
         while(rs.next()) {
             result.add(new Stats(rs.getInt(1), rs.getString(2), rs.getInt(3)));
         }
+        stmt.close();
         return result;
     }
 
     public static void updateStats(String combination) throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement(UPDATE_STATS);
         pstmt.setString(1, combination);
+        pstmt.executeUpdate();
+        pstmt.close();
+    }
+
+    public static Player getPlayer(int id) throws SQLException {
+        Player result = null;
+        PreparedStatement pstmt = conn.prepareStatement(SELECT_FROM_PLAYER);
+        pstmt.setInt(1, id);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) result = new Player(rs.getInt(1), rs.getInt(2));
+        pstmt.close();
+        return result;
+    }
+
+    public static void updatePlayer(int id, int credit) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(UPDATE_PLAYER);
+        pstmt.setInt(2, id);
+        pstmt.setInt(1, credit);
         pstmt.executeUpdate();
         pstmt.close();
     }
