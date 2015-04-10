@@ -1,5 +1,7 @@
 package db;
 
+import org.apache.derby.jdbc.EmbeddedDataSource;
+
 import cards.Combination;
 
 import java.sql.*;
@@ -10,9 +12,9 @@ public class DBManager {
 
     private static final String TOTAL_HANDS = "Total hands";
 
-    private static final String URL = "jdbc:derby:stats";
-    private static final String START = URL + ";create=true";
-    private static final String SHUTDOWN = URL + ";shutdown=true";
+    private static final String DB_NAME = "stats";
+    private static final String CREATE = "create";
+    private static final String SHUTDOWN = "shutdown";
 
     private static final String CREATE_STATS =
             "create table stats (" +
@@ -37,11 +39,16 @@ public class DBManager {
     private static final String SELECT_FROM_PLAYER = "select id, credit from player where id = ?";
     private static final String UPDATE_PLAYER = "update player set credit = ? where id = ?";
 
+    private static EmbeddedDataSource ds;
     private static Connection conn;
 
     public static void init() throws SQLException {
 
-        conn = DriverManager.getConnection(START);
+        ds = new EmbeddedDataSource();
+        ds.setDatabaseName(DB_NAME);
+        ds.setCreateDatabase(CREATE);
+        conn = ds.getConnection();
+
         if (!dbExists(conn.getWarnings())) {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(CREATE_STATS);
@@ -109,12 +116,17 @@ public class DBManager {
     }
 
     public static void shutdownDB() {
-        try {
-            conn = DriverManager.getConnection(SHUTDOWN);
-        } catch (SQLException e) {
-            //database shutdown
-        } finally {
-            conn = null;
+        if (ds != null) {
+            ds.setShutdownDatabase(SHUTDOWN);
+            try {
+                conn.close();
+                ds.getConnection();
+            } catch (SQLException e) {
+                //database shutdown
+            } finally {
+                conn = null;
+                ds = null;
+            }
         }
     }
 }
