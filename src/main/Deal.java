@@ -58,7 +58,7 @@ public class Deal {
 
                 try {
                     Combination.check(hand);
-                } catch (CombinationException e) {
+                } catch (CombinationThrowable e) {
                     combination = e.getCombination();
                     System.out.println(e.getMessage());
                 } finally {

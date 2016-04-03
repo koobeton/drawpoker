@@ -4,12 +4,12 @@ import misc.Paint;
 
 import java.util.List;
 
-public class CombinationException extends Exception {
+public class CombinationThrowable extends Throwable {
 
     private Combination combination;
     private List<Card> cards;
 
-    CombinationException(Combination combination, List<Card> cards) {
+    CombinationThrowable(Combination combination, List<Card> cards) {
         this.combination = combination;
         this.cards = cards;
     }

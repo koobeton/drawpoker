@@ -32,7 +32,7 @@ public enum Combination {
         return payout;
     }
 
-    public static void check(List<Card> hand) throws CombinationException {
+    public static void check(List<Card> hand) throws CombinationThrowable {
 
         //hand must be sorted in ascending order
         hand.sort(null);
@@ -47,65 +47,65 @@ public enum Combination {
         checkJacksOrBetter(hand);
     }
 
-    private static void checkRoyalFlush(List<Card> cards) throws CombinationException {
+    private static void checkRoyalFlush(List<Card> cards) throws CombinationThrowable {
 
         if (cards.get(0).getRank().compareTo(Rank.TEN) == 0) {
             try {
                 checkStraightFlush(cards);
-            } catch (CombinationException e) {
-                throw new CombinationException(ROYAL_FLUSH, cards);
+            } catch (CombinationThrowable e) {
+                throw new CombinationThrowable(ROYAL_FLUSH, cards);
             }
         }
     }
 
-    private static void checkStraightFlush(List<Card> cards) throws CombinationException {
+    private static void checkStraightFlush(List<Card> cards) throws CombinationThrowable {
 
         try {
             checkFlush(cards);
-        } catch (CombinationException e) {
+        } catch (CombinationThrowable e) {
             try {
                 checkStraight(cards);
-            } catch (CombinationException e1) {
-                throw new CombinationException(STRAIGHT_FLUSH, cards);
+            } catch (CombinationThrowable e1) {
+                throw new CombinationThrowable(STRAIGHT_FLUSH, cards);
             }
         }
     }
 
-    private static void checkFourOfAKind(List<Card> cards) throws CombinationException {
+    private static void checkFourOfAKind(List<Card> cards) throws CombinationThrowable {
 
         for (int i = 0; i < cards.size() - 3; i++) {
             if (cards.get(i).compareTo(cards.get(i + 1)) == 0 &&
                     cards.get(i).compareTo(cards.get(i + 2)) == 0 &&
                     cards.get(i).compareTo(cards.get(i + 3)) == 0) {
-                throw new CombinationException(FOUR_OF_A_KIND, cards.subList(i, i + 4));
+                throw new CombinationThrowable(FOUR_OF_A_KIND, cards.subList(i, i + 4));
             }
         }
     }
 
-    private static void checkFullHouse(List<Card> cards) throws CombinationException {
+    private static void checkFullHouse(List<Card> cards) throws CombinationThrowable {
 
         List<Card> temp = new ArrayList<>(cards);
         try {
             checkThreeOfAKind(temp);
-        } catch (CombinationException e) {
+        } catch (CombinationThrowable e) {
             temp.removeAll(e.getCards());
             try {
                 checkPair(temp);
-            } catch (CombinationException e1) {
-                throw new CombinationException(FULL_HOUSE, cards);
+            } catch (CombinationThrowable e1) {
+                throw new CombinationThrowable(FULL_HOUSE, cards);
             }
         }
     }
 
-    private static void checkFlush(List<Card> cards) throws CombinationException {
+    private static void checkFlush(List<Card> cards) throws CombinationThrowable {
 
         for (int i = 0; i < cards.size() - 1; i++) {
             if (cards.get(i).getSuit().compareTo(cards.get(i + 1).getSuit()) != 0) return;
         }
-        throw new CombinationException(FLUSH, cards);
+        throw new CombinationThrowable(FLUSH, cards);
     }
 
-    private static void checkStraight(List<Card> cards) throws CombinationException {
+    private static void checkStraight(List<Card> cards) throws CombinationThrowable {
 
         List<Card> temp = new ArrayList<>(cards);
         int offset = temp.get(0).getRank().compareTo(Rank.DEUCE) == 0 &&
@@ -119,45 +119,45 @@ public enum Combination {
         if (offset == 2) {
             temp.add(0, temp.remove(temp.size() - 1));
         }
-        throw new CombinationException(STRAIGHT, temp);
+        throw new CombinationThrowable(STRAIGHT, temp);
     }
 
-    private static void checkThreeOfAKind(List<Card> cards) throws CombinationException {
+    private static void checkThreeOfAKind(List<Card> cards) throws CombinationThrowable {
 
         for (int i = 0; i < cards.size() - 2; i++) {
             if (cards.get(i).compareTo(cards.get(i + 1)) == 0 &&
                     cards.get(i).compareTo(cards.get(i + 2)) == 0) {
-                throw new CombinationException(THREE_OF_A_KIND, cards.subList(i, i + 3));
+                throw new CombinationThrowable(THREE_OF_A_KIND, cards.subList(i, i + 3));
             }
         }
     }
 
-    private static void checkTwoPairs(List<Card> cards) throws CombinationException {
+    private static void checkTwoPairs(List<Card> cards) throws CombinationThrowable {
 
         List<Card> temp = new ArrayList<>(cards);
         List<Card> result = new ArrayList<>();
         try {
             checkPair(temp);
-        } catch (CombinationException e) {
+        } catch (CombinationThrowable e) {
             result.addAll(e.getCards());
             temp.removeAll(e.getCards());
             try {
                 checkPair(temp);
-            } catch (CombinationException e1) {
+            } catch (CombinationThrowable e1) {
                 result.addAll(e1.getCards());
-                throw new CombinationException(TWO_PAIRS, result);
+                throw new CombinationThrowable(TWO_PAIRS, result);
             }
         }
     }
 
-    private static void checkJacksOrBetter(List<Card> cards) throws CombinationException {
+    private static void checkJacksOrBetter(List<Card> cards) throws CombinationThrowable {
 
         List<Card> temp = new ArrayList<>(cards);
         try {
             checkPair(temp);
-        } catch (CombinationException e) {
+        } catch (CombinationThrowable e) {
             if (e.getCards().get(0).getRank().compareTo(Rank.JACK) >= 0) {
-                throw new CombinationException(JACKS_OR_BETTER, e.getCards());
+                throw new CombinationThrowable(JACKS_OR_BETTER, e.getCards());
             } else {
                 temp.removeAll(e.getCards());
                 checkJacksOrBetter(temp);
@@ -165,11 +165,11 @@ public enum Combination {
         }
     }
 
-    private static void checkPair(List<Card> cards) throws CombinationException {
+    private static void checkPair(List<Card> cards) throws CombinationThrowable {
 
         for (int i = 0; i < cards.size() - 1; i++) {
             if (cards.get(i).compareTo(cards.get(i + 1)) == 0) {
-                throw new CombinationException(null, cards.subList(i, i + 2));
+                throw new CombinationThrowable(null, cards.subList(i, i + 2));
             }
         }
     }
