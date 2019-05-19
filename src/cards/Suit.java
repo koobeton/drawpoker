@@ -2,16 +2,16 @@ package cards;
 
 public enum Suit {
 
-    //ASCII codes
-    HEARTS(3),
-    DIAMONDS(4),
-    CLUBS(5),
-    SPADES(6);
+    //UTF-8
+    HEARTS("\u2665"),
+    DIAMONDS("\u2666"),
+    CLUBS("\u2663"),
+    SPADES("\u2660");
 
     private final String value;
 
-    Suit(int value) {
-        this.value = Character.toString((char)value);
+    Suit(String value) {
+        this.value = value;
     }
 
     @Override
